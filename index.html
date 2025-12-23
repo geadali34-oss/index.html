@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الجمعيات التعاونية | تنظيم الدفعات بدون فوائد</title>
+    <style>
+        :root {
+            --rajhi-red: #CE1126;
+            --ahli-blue: #0056A3;
+            --primary: #1A5F7A;
+            --success: #2E8B57;
+            --warning: #FFB800;
+            --danger: #DC3545;
+            --dark: #2D3047;
+            --light: #F8F9FA;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), 
+                        url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0icGF0dGVybiIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBwYXR0ZXJuVHJhbnNmb3JtPSJyb3RhdGUoNDUpIj48cGF0aCBkPSJNIDAgMCBMIDQwIDQwIE0gMCAtNDAgTCA0MCAwIE0gLTQwIDAgTCAwIDQwIiBzdHJva2U9IiMxQTVGN0EiIHN0cm9rZS13aWR0aD0iMC41IiBmaWxsPSJub25lIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
+            min-height: 100vh;
+        }
+        
+        /* ========== رأس الصفحة ========== */
+        .main-header {
+            background: linear-gradient(135deg, var(--rajhi-red), #E74C3C);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(206, 17, 38, 0.2);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--rajhi-red);
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* ========== شريط التنقل ========== */
+        .main-nav {
+            background: white;
+            padding: 0 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+        
+        .nav-item {
+            padding: 20px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-item:hover {
+            color: var(--primary);
+            background: rgba(26, 95, 122, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--rajhi-red);
+            border-bottom-color: var(--rajhi-red);
+        }
+        
+        /* ========== المحتوى الرئيسي ========== */
+        .main-content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ========== بطاقات التصميم ========== */
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid #e1e5eb;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--rajhi-red);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* ========== صفحة التعريف بالجمعية ========== */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .intro-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 30px;
+            border-right: 5px solid var(--primary);
+        }
+        
+        .intro-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .warning-box {
+            background: #FFF3CD;
+            border: 2px solid #FFEEBA;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            color: #856404;
+        }
+        
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* ========== صفحة التسجيل ========== */
+        .registration-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .step-indicator {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 0 auto 10px;
+            transition: all 0.3s;
+        }
+        
+        .step-indicator.active .step-number {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .step-line {
+            position: absolute;
+            top: 25px;
+            right: 10%;
+            left: 10%;
+            height: 3px;
+            background: #e9ecef;
+            z-index: 0;
+        }
+        
+        /* ========== نموذج التسجيل ========== */
+        .reg-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+            outline: none;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f1f3f4;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #2C3E50);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 95, 122, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+        }
+        
+        /* ========== اختيار الجمعية ========== */
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .plan-card {
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .plan-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .plan-card.selected {
+            border-color: var(--primary);
+            background: rgba(26, 95, 122, 0.05);
+        }
+        
+        .plan-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--rajhi-red);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .plan-price {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .plan-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f3f4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+        
+        /* ========== رفع الإيصال ========== */
+        .receipt-upload {
+            border: 2px dashed #dee2e6;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .receipt-upload:hover {
+            border-color: var(--primary);
+            background: rgba(26, 95, 122, 0.05);
+        }
+        
+        .receipt-upload i {
+            font-size: 3em;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* ========== لوحة التحكم ========== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--primary);
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        /* ========== صفحة الدردشة ========== */
+        .chat-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+            height: 600px;
+        }
+        
+        .chat-sidebar {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .chat-messages {
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .messages-header {
+            padding: 20px;
+            border-bottom: 2px solid #f1f3f4;
+            background: var(--primary);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .messages-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .message-input {
+            padding: 20px;
+            border-top: 2px solid #f1f3f4;
+        }
+        
+        /* ========== تذييل الصفحة ========== */
+        .main-footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 30px 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--rajhi-red);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9em;
+        }
+        
+        /* ========== تصميم متجاوب ========== */
+        @media (max-width: 768px) {
+            .main-nav {
+                padding: 0 15px;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+            }
+            
+            .nav-item {
+                padding: 15px;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .plans-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .registration-steps {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .step-line {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- رأس الصفحة -->
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-hands-helping"></i>
+            </div>
+            <div class="logo-text">
+                <h1>منصة الجمعيات التعاونية</h1>
+                <p>تنظيم الدفعات بدون فوائد • نظام توفير جماعي آمن</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="openLogin()">
+                <i class="fas fa-sign-in-alt"></i> دخول الأعضاء
+            </button>
+        </div>
+    </header>
+    
+    <!-- شريط التنقل -->
+    <nav class="main-nav">
+        <ul class="nav-list">
+            <li class="nav-item active" onclick="showPage('home')">
+                <i class="fas fa-home"></i> الرئيسية
+            </li>
+            <li class="nav-item" onclick="showPage('register')">
+                <i class="fas fa-user-plus"></i> التسجيل
+            </li>
+            <li class="nav-item" onclick="showPage('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> لوحة التحكم
+            </li>
+            <li class="nav-item" onclick="showPage('chat')">
+                <i class="fas fa-comments"></i> الدردشة
+            </li>
+            <li class="nav-item" onclick="showPage('about')">
+                <i class="fas fa-info-circle"></i> عن الجمعية
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- الصفحة الرئيسية -->
+        <section id="home" class="page-section active">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <i class="fas fa-hands-helping"></i> مرحباً بك في منصة الجمعيات التعاونية
+                </h2>
+                
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> ملاحظة هامة:</h4>
+                    <p>الجمعية ليست استثماراً ولا تقدم أرباحاً. هذا نظام توفير جماعي لتنظيم الدفعات بدون فوائد أو أرباح. كل عضو يحصل على مبلغ الجمعية مرة واحدة حسب دور الاستلام المحدد له.</p>
+                </div>
+                
+                <div class="intro-grid">
+                    <div class="intro-card">
+                        <h3><i class="fas fa-handshake"></i> مفهوم الجمعية</h3>
+                        <p>نظام توفير جماعي حيث يجتمع عدد من الأفراد على دفعة شهرية ثابتة، ويحصل كل عضو على مجموع الدفعات مرة واحدة حسب الدور المحدد له.</p>
+                    </div>
+                    
+                    <div class="intro-card">
+                        <h3><i class="fas fa-shield-alt"></i> الأمان والشفافية</h3>
+                        <p>جميع العمليات مسجلة وشفافة. ربط مباشر مع الحسابات البنكية للقراءة فقط. لا يوجد وصول لأموال الأعضاء.</p>
+                    </div>
+                    
+                    <div class="intro-card">
+                        <h3><i class="fas fa-calendar-check"></i> نظام الأدوار</h3>
+                        <p>كل عضو يحصل على دور ثابت للاستلام. النظام يضمن العدالة والتنظيم الدقيق للأدوار بناءً على تسلسل الانضمام.</p>
+                    </div>
+                    
+                    <div class="intro-card">
+                        <h3><i class="fas fa-users"></i> مجتمع متعاون</h3>
+                        <p>نعمل على بناء مجتمع تعاوني يساعد بعضه البعض في تحقيق أهداف التوفير بطريقة منظمة وآمنة.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn btn-primary" onclick="showPage('register')" style="padding: 20px 50px; font-size: 1.2em;">
+                        <i class="fas fa-user-plus"></i> ابدأ التسجيل الآن
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- صفحة التسجيل -->
+        <section id="register" class="page-section">
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-user-plus"></i> تسجيل عضو جديد</h2>
+                
+                <!-- خطوات التسجيل -->
+                <div class="registration-steps">
+                    <div class="step-line"></div>
+                    <div class="step-indicator active" id="step1-indicator">
+                        <div class="step-number">1</div>
+                        <div>البيانات الشخصية</div>
+                    </div>
+                    <div class="step-indicator" id="step2-indicator">
+                        <div class="step-number">2</div>
+                        <div>اختيار الجمعية</div>
+                    </div>
+                    <div class="step-indicator" id="step3-indicator">
+                        <div class="step-number">3</div>
+                        <div>التأكيد والدفع</div>
+                    </div>
+                </div>
+                
+                <!-- نموذج التسجيل -->
+                <form id="registrationForm" class="reg-form">
+                    <!-- الخطوة 1: البيانات الشخصية -->
+                    <div class="form-step active" id="step1-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> الاسم بالكامل *</label>
+                                <input type="text" class="form-input" id="fullName" required placeholder="أدخل اسمك الكامل">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-id-card"></i> رقم الهوية الوطنية *</label>
+                                <input type="text" class="form-input" id="nationalId" required pattern="[0-9]{10}" placeholder="10 أرقام">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-phone"></i> رقم الجوال *</label>
+                                <input type="tel" class="form-input" id="phone" required placeholder="05xxxxxxxx">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> البريد الإلكتروني *</label>
+                                <input type="email" class="form-input" id="email" required placeholder="example@email.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-city"></i> المدينة *</label>
+                                <select class="form-input" id="city" required>
+                                    <option value="">اختر المدينة</option>
+                                    <option value="riyadh">الرياض</option>
+                                    <option value="jeddah">جدة</option>
+                                    <option value="mecca">مكة المكرمة</option>
+                                    <option value="medina">المدينة المنورة</option>
+                                    <option value="dammam">الدمام</option>
+                                    <option value="khobar">الخبر</option>
+                                    <option value="dhahran">الظهران</option>
+                                    <option value="ahsa">الأحساء</option>
+                                    <option value="qatif">القطيف</option>
+                                    <option value="taif">الطائف</option>
+                                    <option value="buraidah">بريدة</option>
+                                    <option value="hail">حائل</option>
+                                    <option value="tabuk">تبوك</option>
+                                    <option value="jazan">جازان</option>
+                                    <option value="najran">نجران</option>
+                                    <option value="abha">أبها</option>
+                                    <option value="khamis">خميس مشيط</option>
+                                    <option value="yanbu">ينبع</option>
+                                    <option value="jubail">الجبيل</option>
+                                    <option value="hafr">حفر الباطن</option>
+                                    <option value="qassim">القصيم</option>
+                                    <option value="asir">عسير</option>
+                                    <option value="bahah">الباحة</option>
+                                    <option value="jawf">الجوف</option>
+                                    <option value="northern">الحدود الشمالية</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-birthday-cake"></i> تاريخ الميلاد *</label>
+                                <input type="date" class="form-input" id="birthDate" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="nextStep(2)">
+                                التالي <i class="fas fa-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- الخطوة 2: اختيار الجمعية -->
+                    <div class="form-step" id="step2-form">
+                        <h3 style="color: var(--primary); margin-bottom: 30px; text-align: center;">
+                            <i class="fas fa-money-check-alt"></i> اختر نوع الجمعية المناسب لك
+                        </h3>
+                        
+                        <div class="plans-container">
+                            <!-- باقة 500 ريال -->
+                            <div class="plan-card" onclick="selectPlan('500')">
+                                <div class="plan-badge">الأكثر شيوعاً</div>
+                                <h3><i class="fas fa-coins"></i> جمعية 500 ريال</h3>
+                                <div class="plan-price">500 ر.س</div>
+                                <p>شهرياً لمدة 12 شهر</p>
+                                <ul class="plan-features">
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> مبلغ مناسب للجميع</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> دور استلام محدد</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> متابعة شهرية</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> إشعارات تلقائية</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> دعم فني متكامل</li>
+                                </ul>
+                                <div class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                                    <i class="fas fa-check"></i> اختر هذه الجمعية
+                                </div>
+                            </div>
+                            
+                            <!-- باقة 1000 ريال -->
+                            <div class="plan-card" onclick="selectPlan('1000')">
+                                <div class="plan-badge">الأفضل قيمة</div>
+                                <h3><i class="fas fa-gem"></i> جمعية 1000 ريال</h3>
+                                <div class="plan-price">1,000 ر.س</div>
+                                <p>شهرياً لمدة 12 شهر</p>
+                                <ul class="plan-features">
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> جميع مميزات 500 ريال</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> تأمين إضافي</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> متابعة شخصية</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> أولوية في الدور</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> تقارير شهرية</li>
+                                </ul>
+                                <div class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                                    <i class="fas fa-check"></i> اختر هذه الجمعية
+                                </div>
+                            </div>
+                            
+                            <!-- باقة 5000 ريال -->
+                            <div class="plan-card" onclick="selectPlan('5000')">
+                                <div class="plan-badge">VIP</div>
+                                <h3><i class="fas fa-crown"></i> جمعية 5000 ريال</h3>
+                                <div class="plan-price">5,000 ر.س</div>
+                                <p>شهرياً لمدة 12 شهر</p>
+                                <ul class="plan-features">
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> جميع المميزات السابقة</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> ضمانات إضافية</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> محفظة رقمية</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> دعم فوري 24/7</li>
+                                    <li><i class="fas fa-check-circle" style="color: var(--success);"></i> مدير حساب شخصي</li>
+                                </ul>
+                                <div class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                                    <i class="fas fa-check"></i> اختر هذه الجمعية
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 30px; color: #6c757d; font-size: 0.9em;">
+                            <p id="selectedPlanText" style="display: none; color: var(--primary); font-weight: 600;">
+                                <i class="fas fa-check-circle"></i> تم اختيار جمعية <span id="selectedPlanName"></span>
+                            </p>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                                <i class="fas fa-arrow-right"></i> السابق
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                                التالي <i class="fas fa-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- الخطوة 3: التأكيد والدفع -->
+                    <div class="form-step" id="step3-form">
+                        <h3 style="color: var(--primary); margin-bottom: 30px; text-align: center;">
+                            <i class="fas fa-clipboard-check"></i> تأكيد البيانات والدفع
+                        </h3>
+                        
+                        <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                            <h4 style="color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-user-check"></i> بيانات التسجيل:
+                            </h4>
+                            <div id="reviewData"></div>
+                        </div>
+                        
+                        <!-- اختيار البنك -->
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-university"></i> اختر طريقة الربط البنكي *
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px;">
+                                <div id="rajhi-option" class="bank-option" onclick="selectBank('rajhi')" style="padding: 20px; border: 2px solid #dee2e6; border-radius: 12px; cursor: pointer; text-align: center;">
+                                    <div style="font-size: 2em; color: var(--rajhi-red); margin-bottom: 10px;">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <div>بنك الراجحي</div>
+                                </div>
+                                
+                                <div id="ahli-option" class="bank-option" onclick="selectBank('ahli')" style="padding: 20px; border: 2px solid #dee2e6; border-radius: 12px; cursor: pointer; text-align: center;">
+                                    <div style="font-size: 2em; color: var(--ahli-blue); margin-bottom: 10px;">
+                                        <i class="fas fa-landmark"></i>
+                                    </div>
+                                    <div>البنك الأهلي</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- رقم الحساب -->
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-credit-card"></i> رقم الحساب البنكي (IBAN) *
+                            </label>
+                            <input type="text" class="form-input" id="iban" placeholder="SAXX XXXX XXXX XXXX XXXX XXXX" required>
+                        </div>
+                        
+                        <!-- رفع الإيصال -->
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-receipt"></i> رفع إيصال الدفع الأول *
+                            </label>
+                            <div class="receipt-upload" onclick="document.getElementById('receiptFile').click()" id="receiptUpload">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h4>اضغط لرفع الإيصال</h4>
+                                <p style="color: #6c757d; margin-top: 10px;">الصيغ المدعومة: JPG, PNG, PDF</p>
+                                <p id="fileName" style="color: var(--primary); font-weight: 600; margin-top: 10px;"></p>
+                            </div>
+                            <input type="file" id="receiptFile" accept=".jpg,.jpeg,.png,.pdf" style="display: none;" onchange="handleReceiptUpload(this)">
+                        </div>
+                        
+                        <!-- الشروط -->
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="agreeTerms" required style="width: 20px; height: 20px;">
+                                <span>أوافق على شروط وأحكام الجمعية وسياسة الخصوصية *</span>
+                            </label>
+                        </div>
+                        
+                        <div class="warning-box" style="margin: 30px 0;">
+                            <h4><i class="fas fa-info-circle"></i> ملاحظة هامة:</h4>
+                            <p>الربط البنكي للقراءة فقط لتتبع الدفعات. لن نتمكن من الوصول إلى أموالك أو سحبها.</p>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                                <i class="fas fa-arrow-right"></i> السابق
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <i class="fas fa-check-circle"></i> تأكيد التسجيل
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        
+        <!-- صفحة لوحة التحكم -->
+        <section id="dashboard" class="page-section">
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</h2>
+                
+                <div id="loginPrompt" style="text-align: center; padding: 50px;">
+                    <h3 style="color: var(--primary); margin-bottom: 20px;">تسجيل الدخول</h3>
+                    <p style="color: #6c757d; margin-bottom: 30px;">أدخل رقم الجوال للدخول إلى حسابك</p>
+                    
+                    <div style="max-width: 400px; margin: 0 auto;">
+                        <input type="tel" class="form-input" id="loginPhone" placeholder="أدخل رقم الجوال المسجل" style="margin-bottom: 20px;">
+                        <button class="btn btn-primary" onclick="loginUser()" style="width: 100%;">
+                            <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                        </button>
+                    </div>
+                    
+                    <p style="color: #6c757d; margin-top: 20px; font-size: 0.9em;">
+                        إذا كنت مسجلاً من قبل، سيتم تحميل بياناتك تلقائياً
+                    </p>
+                </div>
+                
+                <div id="dashboardContent" style="display: none;">
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <h3><i class="fas fa-user"></i> بيانات العضو</h3>
+                            <div class="stat-value" id="userName">-</div>
+                            <div class="stat-label" id="userId">رقم العضو: -</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3><i class="fas fa-coins"></i> الجمعية</h3>
+                            <div class="stat-value" id="userPlan">-</div>
+                            <div class="stat-label" id="userRole">الدور: -</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3><i class="fas fa-money-check"></i> المدفوعات</h3>
+                            <div class="stat-value" id="totalPaid">0 ر.س</div>
+                            <div class="stat-label">إجمالي المدفوع</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <h3><i class="fas fa-calendar-check"></i> الاستلام</h3>
+                            <div class="stat-value" id="receiveDate">-</div>
+                            <div class="stat-label">تاريخ الاستلام المتوقع</div>
+                        </div>
+                    </div>
+                    
+                    <!-- رفع الإيصالات -->
+                    <div style="margin-top: 40px;">
+                        <h3 style="color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-receipt"></i> رفع إيصالات الدفع
+                        </h3>
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px;">
+                            <div class="receipt-upload" onclick="document.getElementById('paymentReceipt').click()" id="paymentReceiptUpload">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h4>اضغط لرفع إيصال الدفع الشهري</h4>
+                                <p style="color: #6c757d; margin-top: 10px;">الصيغ المدعومة: JPG, PNG, PDF</p>
+                            </div>
+                            <input type="file" id="paymentReceipt" accept=".jpg,.jpeg,.png,.pdf" style="display: none;" onchange="handlePaymentReceipt(this)">
+                        </div>
+                    </div>
+                    
+                    <!-- سجل الدفعات -->
+                    <div style="margin-top: 40px;">
+                        <h3 style="color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-history"></i> سجل الدفعات
+                        </h3>
+                        <div id="paymentHistory" style="background: #f8f9fa; padding: 20px; border-radius: 15px;">
+                            <p style="color: #6c757d; text-align: center;">لا توجد دفعات مسجلة بعد</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- صفحة الدردشة -->
+        <section id="chat" class="page-section">
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-comments"></i> الدردشة والدعم</h2>
+                
+                <div class="chat-container">
+                    <div class="chat-sidebar">
+                        <div style="padding: 20px; background: var(--primary); color: white;">
+                            <h3 style="margin: 0;">الدردشات النشطة</h3>
+                        </div>
+                        <div id="chatContacts" style="padding: 20px;">
+                            <div class="chat-contact active" onclick="openChat('admin')" style="padding: 15px; border-bottom: 1px solid #dee2e6; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <div style="width: 40px; height: 40px; background: var(--rajhi-red); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 600;">الدعم الفني</div>
+                                        <div style="font-size: 0.85em; color: #6c757d;">متصل الآن</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages">
+                        <div class="messages-header">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 40px; height: 40px; background: white; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 1.1em;">الدعم الفني</div>
+                                    <div style="font-size: 0.85em; opacity: 0.9;">يدعمك في جميع استفسارات الجمعية</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="messages-list" id="messagesList">
+                            <div class="message received">
+                                <div style="background: #f1f3f4; padding: 15px; border-radius: 15px 15px 15px 0; max-width: 70%; margin-bottom: 15px;">
+                                    <div>مرحباً بك! أنا المساعد الذكي للجمعية. كيف يمكنني مساعدتك اليوم؟</div>
+                                    <div style="font-size: 0.8em; color: #6c757d; margin-top: 5px; text-align: left;">10:00 ص</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="message-input">
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="chatInput" class="form-input" placeholder="اكتب رسالتك هنا..." style="flex: 1;">
+                                <button class="btn btn-primary" onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- صفحة عن الجمعية -->
+        <section id="about" class="page-section">
+            <div class="section-card">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> نبذة عن الجمعية</h2>
+                
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-university"></i> تعريف الجمعية
+                    </h3>
+                    <p style="line-height: 1.8; color: #495057; font-size: 1.1em; margin-bottom: 20px;">
+                        الجمعية التعاونية هي نظام توفير جماعي يهدف إلى تنظيم المدخرات بين مجموعة من الأفراد بشكل دوري ومنظم. 
+                        تعمل على مبدأ التعاون والتكافل الاجتماعي حيث يلتزم كل عضو بدفع مبلغ شهري ثابت، ويحصل كل عضو على مجموع 
+                        المدخرات دفعة واحدة حسب الدور المحدد له مسبقاً.
+                    </p>
+                    
+                    <div class="warning-box">
+                        <h4><i class="fas fa-exclamation-circle"></i> تنويه هام:</h4>
+                        <p>الجمعية <strong>ليست استثماراً</strong> ولا تقدم <strong>أرباحاً أو فوائد</strong>. النظام مبني على أساس 
+                        <strong>التوفير الجماعي المنظم</strong> فقط. كل عضو يسترد ما دفعه بالكامل حسب دور الاستلام المحدد له.</p>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-bullseye"></i> أهداف الجمعية
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 12px; border-right: 4px solid var(--primary);">
+                            <h4><i class="fas fa-hand-holding-usd"></i> تنظيم التوفير</h4>
+                            <p style="color: #495057; margin-top: 10px;">مساعدة الأفراد على تنظيم مدخراتهم بشكل دوري ومنظم.</p>
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 12px; border-right: 4px solid var(--primary);">
+                            <h4><i class="fas fa-users"></i> تعزيز التعاون</h4>
+                            <p style="color: #495057; margin-top: 10px;">بناء مجتمع تعاوني يساعد بعضه البعض في تحقيق الأهداف المالية.</p>
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 12px; border-right: 4px solid var(--primary);">
+                            <h4><i class="fas fa-shield-alt"></i> الأمان والشفافية</h4>
+                            <p style="color: #495057; margin-top: 10px;">توفير بيئة آمنة وشفافة لجميع العمليات المالية.</p>
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 12px; border-right: 4px solid var(--primary);">
+                            <h4><i class="fas fa-balance-scale"></i> العدالة والتنظيم</h4>
+                            <p style="color: #495057; margin-top: 10px;">ضمان العدالة في توزيع الأدوار والالتزام بالجدول الزمني.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-phone-alt"></i> التواصل معنا
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                        <div style="text-align: center; padding: 25px; background: #f8f9fa; border-radius: 12px;">
+                            <div style="font-size: 2.5em; color: var(--primary); margin-bottom: 15px;"><i class="fas fa-phone"></i></div>
+                            <h4>الهاتف</h4>
+                            <p style="color: #495057; margin-top: 10px;">9200 2020</p>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 25px; background: #f8f9fa; border-radius: 12px;">
+                            <div style="font-size: 2.5em; color: var(--primary); margin-bottom: 15px;"><i class="fas fa-envelope"></i></div>
+                            <h4>البريد الإلكتروني</h4>
+                            <p style="color: #495057; margin-top: 10px;">support@aljam3ia.com</p>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 25px; background: #f8f9fa; border-radius: 12px;">
+                            <div style="font-size: 2.5em; color: var(--primary); margin-bottom: 15px;"><i class="fas fa-clock"></i></div>
+                            <h4>ساعات العمل</h4>
+                            <p style="color: #495057; margin-top: 10px;">8 صباحاً - 4 مساءً</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- تذييل الصفحة -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>عن المنصة</h3>
+                <p style="color: #adb5bd; line-height: 1.6;">منصة الجمعيات التعاونية - نظام توفير جماعي آمن وشفاف لتنظيم الدفعات بدون فوائد.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#" onclick="showPage('register')"><i class="fas fa-user-plus"></i> التسجيل</a></li>
+                    <li><a href="#" onclick="showPage('about')"><i class="fas fa-info-circle"></i> عن الجمعية</a></li>
+                    <li><a href="#" onclick="showPage('chat')"><i class="fas fa-comments"></i> الدردشة</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>التواصل</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> 9200 2020</li>
+                    <li><i class="fas fa-envelope"></i> support@aljam3ia.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> المملكة العربية السعودية</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>الحسابات البنكية</h3>
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <div style="padding: 10px 15px; background: rgba(206, 17, 38, 0.2); border-radius: 8px; color: white;">
+                        <i class="fas fa-university"></i> الراجحي
+                    </div>
+                    <div style="padding: 10px 15px; background: rgba(0, 86, 163, 0.2); border-radius: 8px; color: white;">
+                        <i class="fas fa-landmark"></i> الأهلي
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2024 منصة الجمعيات التعاونية. جميع الحقوق محفوظة. | نظام تنظيم الدفعات بدون فوائد</p>
+        </div>
+    </footer>
+    
+    <!-- نافذة تسجيل الدخول -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%;">
+            <h3 style="color: var(--primary); margin-bottom: 30px; text-align: center;">تسجيل الدخول</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <label>رقم الجوال</label>
+                <input type="tel" class="form-input" id="modalPhone" placeholder="أدخل رقم الجوال المسجل">
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="closeLoginModal()" style="flex: 1;">
+                    إلغاء
+                </button>
+                <button class="btn btn-primary" onclick="modalLogin()" style="flex: 1;">
+                    دخول
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نافذة الإشعارات -->
+    <div id="notificationModal" style="display: none; position: fixed; bottom: 20px; left: 20px; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10000; max-width: 350px;">
+        <div style="display: flex; align-items: start; gap: 15px;">
+            <div style="font-size: 24px; color: var(--primary);"><i class="fas fa-bell"></i></div>
+            <div>
+                <div style="font-weight: 600; color: var(--primary); margin-bottom: 5px;">إشعار</div>
+                <div id="notificationMessage" style="color: #495057;"></div>
+            </div>
+            <button onclick="closeNotification()" style="background: none; border: none; color: #6c757d; cursor: pointer;">×</button>
+        </div>
+    </div>
+
+    <script>
+    // ==============================================
+    // النظام الأساسي - نسخة محسنة
+    // ==============================================
+    
+    class CooperativeSystem {
+        constructor() {
+            this.adminEmail = "geadalshadadi4@gmail.com";
+            this.users = JSON.parse(localStorage.getItem('cooperative_users')) || [];
+            this.visitors = JSON.parse(localStorage.getItem('cooperative_visitors')) || [];
+            this.messages = JSON.parse(localStorage.getItem('cooperative_messages')) || [];
+            this.receipts = JSON.parse(localStorage.getItem('cooperative_receipts')) || [];
+            
+            this.currentUser = null;
+            this.currentStep = 1;
+            this.selectedPlan = null;
+            this.selectedBank = null;
+            this.receiptFile = null;
+            
+            this.init();
+        }
+        
+        init() {
+            this.trackVisitor();
+            this.loadMessages();
+            this.checkLoginStatus();
+            this.setupEventListeners();
+            this.updateNavIcons();
+        }
+        
+        updateNavIcons() {
+            // تحديث الأيقونات في القائمة
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                const text = item.textContent.trim();
+                if (text.includes('الرئيسية')) {
+                    item.innerHTML = '<i class="fas fa-home"></i> الرئيسية';
+                } else if (text.includes('التسجيل')) {
+                    item.innerHTML = '<i class="fas fa-user-plus"></i> التسجيل';
+                } else if (text.includes('لوحة التحكم')) {
+                    item.innerHTML = '<i class="fas fa-tachometer-alt"></i> لوحة التحكم';
+                } else if (text.includes('الدردشة')) {
+                    item.innerHTML = '<i class="fas fa-comments"></i> الدردشة';
+                } else if (text.includes('عن الجمعية')) {
+                    item.innerHTML = '<i class="fas fa-info-circle"></i> عن الجمعية';
+                }
+            });
+        }
+        
+        trackVisitor() {
+            const visitorId = 'VISIT_' + Date.now();
+            const visitorData = {
+                id: visitorId,
+                timestamp: new Date().toISOString(),
+                lastVisit: new Date().toLocaleString('ar-SA')
+            };
+            
+            this.visitors.push(visitorData);
+            localStorage.setItem('cooperative_visitors', JSON.stringify(this.visitors));
+            
+            this.sendVisitorNotification(visitorData);
+        }
+        
+        async sendVisitorNotification(visitorData) {
+            const notification = {
+                to: this.adminEmail,
+                subject: '👤 زائر جديد على المنصة',
+                body: `
+                    📍 زائر جديد دخل إلى المنصة
+                    🕐 وقت الزيارة: ${visitorData.lastVisit}
+                    📊 إجمالي الزوار: ${this.visitors.length}
+                `,
+                timestamp: new Date().toISOString()
+            };
+            
+            const sentNotifications = JSON.parse(localStorage.getItem('sent_notifications')) || [];
+            sentNotifications.push(notification);
+            localStorage.setItem('sent_notifications', JSON.stringify(sentNotifications));
+        }
+        
+        async registerUser(userData) {
+            try {
+                if (!this.validateUserData(userData)) {
+                    throw new Error('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                }
+                
+                // التحقق من عدم التسجيل المسبق
+                if (this.users.find(u => u.nationalId === userData.nationalId)) {
+                    throw new Error('رقم الهوية مسجل مسبقاً');
+                }
+                
+                if (this.users.find(u => u.phone === userData.phone)) {
+                    throw new Error('رقم الجوال مسجل مسبقاً');
+                }
+                
+                if (this.users.find(u => u.email === userData.email)) {
+                    throw new Error('البريد الإلكتروني مسجل مسبقاً');
+                }
+                
+                if (!this.selectedPlan) {
+                    throw new Error('الرجاء اختيار نوع الجمعية');
+                }
+                
+                if (!this.selectedBank) {
+                    throw new Error('الرجاء اختيار البنك');
+                }
+                
+                if (!this.receiptFile) {
+                    throw new Error('الرجاء رفع إيصال الدفع');
+                }
+                
+                const memberId = 'MEM' + Date.now().toString().slice(-6);
+                const nextRole = this.getNextRole();
+                const receiveDate = this.calculateReceiveDate(nextRole);
+                
+                const newUser = {
+                    id: memberId,
+                    ...userData,
+                    plan: this.selectedPlan,
+                    bank: this.selectedBank,
+                    role: nextRole,
+                    receiveDate: receiveDate,
+                    registrationDate: new Date().toISOString(),
+                    status: 'active',
+                    totalPaid: 0,
+                    payments: [],
+                    loginHistory: [{
+                        timestamp: new Date().toISOString(),
+                        action: 'registration'
+                    }]
+                };
+                
+                // حفظ الإيصال
+                const receiptData = {
+                    id: 'REC' + Date.now(),
+                    userId: memberId,
+                    fileName: this.receiptFile.name,
+                    fileType: this.receiptFile.type,
+                    uploadDate: new Date().toISOString(),
+                    status: 'pending'
+                };
+                
+                this.receipts.push(receiptData);
+                localStorage.setItem('cooperative_receipts', JSON.stringify(this.receipts));
+                
+                this.users.push(newUser);
+                localStorage.setItem('cooperative_users', JSON.stringify(this.users));
+                
+                // إرسال البيانات إلى البريد
+                await this.sendUserDataToEmail(newUser, receiptData);
+                
+                // تسجيل الدخول التلقائي
+                this.loginUser(newUser.phone);
+                
+                return {
+                    success: true,
+                    message: 'تم التسجيل بنجاح!',
+                    memberId: memberId,
+                    role: nextRole,
+                    receiveDate: receiveDate
+                };
+                
+            } catch (error) {
+                console.error('خطأ في التسجيل:', error);
+                return {
+                    success: false,
+                    message: error.message
+                };
+            }
+        }
+        
+        validateUserData(data) {
+            const requiredFields = ['fullName', 'nationalId', 'phone', 'email', 'city', 'birthDate', 'iban'];
+            
+            for (const field of requiredFields) {
+                if (!data[field] || data[field].trim() === '') {
+                    return false;
+                }
+            }
+            
+            if (!/^\d{10}$/.test(data.nationalId.replace(/\D/g, ''))) {
+                return false;
+            }
+            
+            if (!/^05\d{8}$/.test(data.phone.replace(/\D/g, ''))) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        getNextRole() {
+            const activeUsers = this.users.filter(u => u.status === 'active');
+            return activeUsers.length + 1;
+        }
+        
+        calculateReceiveDate(role) {
+            const startDate = new Date();
+            startDate.setMonth(startDate.getMonth() + role);
+            startDate.setDate(1);
+            return startDate.toLocaleDateString('ar-SA');
+        }
+        
+        async sendUserDataToEmail(userData, receiptData) {
+            try {
+                const planNames = {
+                    '500': 'جمعية 500 ريال',
+                    '1000': 'جمعية 1000 ريال',
+                    '5000': 'جمعية 5000 ريال'
+                };
+                
+                const bankNames = {
+                    'rajhi': 'بنك الراجحي',
+                    'ahli': 'البنك الأهلي'
+                };
+                
+                const emailData = {
+                    to: this.adminEmail,
+                    subject: `🎉 تسجيل عضو جديد - ${userData.fullName}`,
+                    body: `
+                        📝 تسجيل عضو جديد في المنصة التعاونية
+                        
+                        بيانات العضو:
+                        ------------
+                        🆔 رقم العضو: ${userData.id}
+                        👤 الاسم الكامل: ${userData.fullName}
+                        🆔 رقم الهوية: ${userData.nationalId}
+                        📱 رقم الجوال: ${userData.phone}
+                        📧 البريد الإلكتروني: ${userData.email}
+                        🏙️ المدينة: ${userData.city}
+                        
+                        معلومات الجمعية:
+                        ---------------
+                        💰 نوع الجمعية: ${planNames[userData.plan]}
+                        🏦 البنك: ${bankNames[userData.bank]}
+                        🔢 رقم الحساب: ${userData.iban}
+                        🎯 الدور: ${userData.role}
+                        📅 تاريخ الاستلام: ${userData.receiveDate}
+                        
+                        معلومات الإيصال:
+                        ---------------
+                        📎 اسم الملف: ${receiptData.fileName}
+                        📋 نوع الملف: ${receiptData.fileType}
+                        📅 تاريخ الرفع: ${new Date(receiptData.uploadDate).toLocaleString('ar-SA')}
+                        
+                        معلومات النظام:
+                        ---------------
+                        📅 تاريخ التسجيل: ${new Date().toLocaleString('ar-SA')}
+                        👥 إجمالي الأعضاء: ${this.users.length}
+                    `,
+                    timestamp: new Date().toISOString()
+                };
+                
+                const sentEmails = JSON.parse(localStorage.getItem('sent_emails')) || [];
+                sentEmails.push(emailData);
+                localStorage.setItem('sent_emails', JSON.stringify(sentEmails));
+                
+                return true;
+                
+            } catch (error) {
+                console.error('خطأ في إرسال البريد:', error);
+                return false;
+            }
+        }
+        
+        loginUser(phone) {
+            const cleanPhone = phone.replace(/\D/g, '');
+            const user = this.users.find(u => u.phone.replace(/\D/g, '') === cleanPhone);
+            
+            if (user) {
+                this.currentUser = user;
+                
+                user.loginHistory.push({
+                    timestamp: new Date().toISOString(),
+                    action: 'login'
+                });
+                
+                localStorage.setItem('cooperative_users', JSON.stringify(this.users));
+                localStorage.setItem('last_login', user.id);
+                
+                this.showNotification(`مرحباً بعودتك ${user.fullName}!`, 'success');
+                this.updateDashboard();
+                
+                return {
+                    success: true,
+                    user: user
+                };
+            } else {
+                this.showNotification('رقم الجوال غير مسجل', 'error');
+                return {
+                    success: false,
+                    message: 'رقم الجوال غير مسجل'
+                };
+            }
+        }
+        
+        updateDashboard() {
+            if (this.currentUser) {
+                document.getElementById('loginPrompt').style.display = 'none';
+                document.getElementById('dashboardContent').style.display = 'block';
+                
+                document.getElementById('userName').textContent = this.currentUser.fullName;
+                document.getElementById('userId').textContent = `رقم العضو: ${this.currentUser.id}`;
+                
+                const planNames = {
+                    '500': '500 ريال',
+                    '1000': '1,000 ريال',
+                    '5000': '5,000 ريال'
+                };
+                
+                document.getElementById('userPlan').textContent = planNames[this.currentUser.plan] || 'غير محدد';
+                document.getElementById('userRole').textContent = `الدور: ${this.currentUser.role}`;
+                document.getElementById('totalPaid').textContent = `${this.currentUser.totalPaid.toLocaleString()} ر.س`;
+                document.getElementById('receiveDate').textContent = this.currentUser.receiveDate || '-';
+                
+                this.updatePaymentHistory();
+                
+            } else {
+                document.getElementById('loginPrompt').style.display = 'block';
+                document.getElementById('dashboardContent').style.display = 'none';
+            }
+        }
+        
+        updatePaymentHistory() {
+            const container = document.getElementById('paymentHistory');
+            if (!container) return;
+            
+            if (this.currentUser.payments && this.currentUser.payments.length > 0) {
+                container.innerHTML = this.currentUser.payments.map(payment => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #dee2e6;">
+                        <div>
+                            <div style="font-weight: 600; color: var(--primary);">دفعة شهر ${payment.month}</div>
+                            <div style="color: #6c757d; font-size: 0.9em; margin-top: 5px;">
+                                <i class="fas fa-calendar"></i> ${payment.date}
+                            </div>
+                        </div>
+                        <div style="color: var(--success); font-weight: 600; font-size: 1.1em;">
+                            ${payment.amount.toLocaleString()} ر.س
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-receipt" style="font-size: 3em; color: #adb5bd; margin-bottom: 20px;"></i>
+                        <p style="color: #6c757d;">لا توجد دفعات مسجلة بعد</p>
+                    </div>
+                `;
+            }
+        }
+        
+        loadMessages() {
+            if (this.messages.length === 0) {
+                this.messages = [
+                    {
+                        id: 1,
+                        sender: 'system',
+                        text: 'مرحباً بك في الدردشة! كيف يمكنني مساعدتك اليوم؟',
+                        timestamp: new Date().toISOString(),
+                        read: false
+                    }
+                ];
+                localStorage.setItem('cooperative_messages', JSON.stringify(this.messages));
+            }
+            
+            this.updateChatMessages();
+        }
+        
+        sendMessage(message) {
+            const newMessage = {
+                id: Date.now(),
+                sender: 'user',
+                text: message,
+                timestamp: new Date().toISOString(),
+                read: false
+            };
+            
+            this.messages.push(newMessage);
+            localStorage.setItem('cooperative_messages', JSON.stringify(this.messages));
+            
+            setTimeout(() => {
+                const responses = [
+                    "شكراً لرسالتك. سأرد عليك قريباً.",
+                    "تم استلام رسالتك. كيف يمكنني مساعدتك في شؤون الجمعية؟",
+                    "هل لديك استفسار حول دفعتك الشهرية؟",
+                    "يمكنني مساعدتك في معرفة دورك القادم في الجمعية."
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                const systemMessage = {
+                    id: Date.now() + 1,
+                    sender: 'system',
+                    text: randomResponse,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                };
+                
+                this.messages.push(systemMessage);
+                localStorage.setItem('cooperative_messages', JSON.stringify(this.messages));
+                this.updateChatMessages();
+                
+            }, 1000);
+            
+            this.updateChatMessages();
+        }
+        
+        updateChatMessages() {
+            const container = document.getElementById('messagesList');
+            if (!container) return;
+            
+            container.innerHTML = this.messages.map(msg => `
+                <div class="message ${msg.sender === 'user' ? 'sent' : 'received'}">
+                    <div style="
+                        background: ${msg.sender === 'user' ? 'var(--primary)' : '#f1f3f4'};
+                        color: ${msg.sender === 'user' ? 'white' : '#495057'};
+                        padding: 15px;
+                        border-radius: ${msg.sender === 'user' ? '15px 15px 0 15px' : '15px 15px 15px 0'};
+                        max-width: 70%;
+                        margin-bottom: 15px;
+                        margin-${msg.sender === 'user' ? 'left' : 'right'}: auto;
+                    ">
+                        <div>${msg.text}</div>
+                        <div style="
+                            font-size: 0.8em;
+                            margin-top: 5px;
+                            text-align: ${msg.sender === 'user' ? 'left' : 'right'};
+                            opacity: 0.7;
+                        ">
+                            ${new Date(msg.timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        setupEventListeners() {
+            const form = document.getElementById('registrationForm');
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    await this.handleRegistration();
+                });
+            }
+            
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleChatSend();
+                    }
+                });
+            }
+        }
+        
+        async handleRegistration() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التسجيل...';
+            submitBtn.disabled = true;
+            
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                nationalId: document.getElementById('nationalId').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                city: document.getElementById('city').value,
+                birthDate: document.getElementById('birthDate').value,
+                iban: document.getElementById('iban').value
+            };
+            
+            const result = await this.registerUser(formData);
+            
+            if (result.success) {
+                this.showNotification(`مبروك! تم التسجيل بنجاح. رقم عضويتك: ${result.memberId}`, 'success');
+                
+                setTimeout(() => {
+                    this.showRegistrationSuccess(result);
+                }, 1000);
+                
+            } else {
+                this.showNotification(result.message, 'error');
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد التسجيل';
+                submitBtn.disabled = false;
+            }
+        }
+        
+        showRegistrationSuccess(result) {
+            const planNames = {
+                '500': 'جمعية 500 ريال',
+                '1000': 'جمعية 1000 ريال',
+                '5000': 'جمعية 5000 ريال'
+            };
+            
+            const successHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 60px; color: var(--success); margin-bottom: 20px;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 style="color: var(--primary); margin-bottom: 20px;">تم التسجيل بنجاح!</h3>
+                    <p style="color: #495057; margin-bottom: 30px;">مبروك! أصبحت الآن عضواً في الجمعية التعاونية</p>
+                    
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; max-width: 500px; margin: 0 auto 30px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: right;">
+                            <div><strong><i class="fas fa-id-card"></i> رقم العضو:</strong></div>
+                            <div>${result.memberId}</div>
+                            
+                            <div><strong><i class="fas fa-coins"></i> نوع الجمعية:</strong></div>
+                            <div>${planNames[this.selectedPlan]}</div>
+                            
+                            <div><strong><i class="fas fa-list-ol"></i> الدور:</strong></div>
+                            <div>${result.role}</div>
+                            
+                            <div><strong><i class="fas fa-calendar-check"></i> تاريخ الاستلام:</strong></div>
+                            <div>${result.receiveDate}</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 15px;">
+                        <h4 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-envelope"></i> تم إرسال البيانات
+                        </h4>
+                        <p style="color: #495057;">تم إرسال تفاصيل حسابك إلى البريد الإلكتروني: ${this.adminEmail}</p>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="cooperativeSystem.showPage('dashboard')" style="padding: 15px 40px;">
+                        <i class="fas fa-tachometer-alt"></i> الذهاب إلى لوحة التحكم
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('step3-form').innerHTML = successHTML;
+        }
+        
+        handleChatSend() {
+            const input = document.getElementById('chatInput');
+            if (input.value.trim()) {
+                this.sendMessage(input.value);
+                input.value = '';
+            }
+        }
+        
+        showNotification(message, type = 'info') {
+            const modal = document.getElementById('notificationModal');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            
+            const icon = modal.querySelector('i');
+            if (type === 'success') {
+                icon.style.color = '#2E8B57';
+            } else if (type === 'error') {
+                icon.style.color = '#CE1126';
+            } else {
+                icon.style.color = '#1A5F7A';
+            }
+            
+            modal.style.display = 'block';
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 5000);
+        }
+        
+        closeNotification() {
+            document.getElementById('notificationModal').style.display = 'none';
+        }
+        
+        showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            const pageMap = {
+                'home': 'الرئيسية',
+                'register': 'التسجيل',
+                'dashboard': 'لوحة التحكم',
+                'chat': 'الدردشة',
+                'about': 'عن الجمعية'
+            };
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.textContent.includes(pageMap[pageId])) {
+                    item.classList.add('active');
+                }
+            });
+            
+            if (pageId === 'dashboard') {
+                this.updateDashboard();
+            }
+            
+            if (pageId === 'chat') {
+                this.updateChatMessages();
+            }
+            
+            this.updateNavIcons();
+        }
+        
+        nextStep(step) {
+            if (step === 2) {
+                if (!this.validateStep1()) {
+                    this.showNotification('الرجاء ملء جميع الحقول المطلوبة في البيانات الشخصية', 'error');
+                    return;
+                }
+                
+                this.updateReviewData();
+            }
+            
+            if (step === 3) {
+                if (!this.selectedPlan) {
+                    this.showNotification('الرجاء اختيار نوع الجمعية أولاً', 'error');
+                    return;
+                }
+                
+                if (!this.selectedBank) {
+                    this.showNotification('الرجاء اختيار البنك أولاً', 'error');
+                    return;
+                }
+                
+                if (!document.getElementById('iban').value) {
+                    this.showNotification('الرجاء إدخال رقم الحساب البنكي', 'error');
+                    return;
+                }
+            }
+            
+            document.getElementById(`step${this.currentStep}-form`).classList.remove('active');
+            document.getElementById(`step${this.currentStep}-indicator`).classList.remove('active');
+            
+            document.getElementById(`step${step}-form`).classList.add('active');
+            document.getElementById(`step${step}-indicator`).classList.add('active');
+            
+            this.currentStep = step;
+        }
+        
+        prevStep() {
+            if (this.currentStep > 1) {
+                document.getElementById(`step${this.currentStep}-form`).classList.remove('active');
+                document.getElementById(`step${this.currentStep}-indicator`).classList.remove('active');
+                
+                document.getElementById(`step${this.currentStep - 1}-form`).classList.add('active');
+                document.getElementById(`step${this.currentStep - 1}-indicator`).classList.add('active');
+                
+                this.currentStep--;
+            }
+        }
+        
+        validateStep1() {
+            const required = ['fullName', 'nationalId', 'phone', 'email', 'city', 'birthDate'];
+            
+            for (const field of required) {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    input.style.borderColor = 'var(--danger)';
+                    return false;
+                } else {
+                    input.style.borderColor = '#dee2e6';
+                }
+            }
+            
+            return true;
+        }
+        
+        updateReviewData() {
+            const planNames = {
+                '500': 'جمعية 500 ريال',
+                '1000': 'جمعية 1000 ريال',
+                '5000': 'جمعية 5000 ريال'
+            };
+            
+            const bankNames = {
+                'rajhi': 'بنك الراجحي',
+                'ahli': 'البنك الأهلي'
+            };
+            
+            const data = {
+                '👤 الاسم': document.getElementById('fullName').value,
+                '🆔 رقم الهوية': document.getElementById('nationalId').value,
+                '📱 رقم الجوال': document.getElementById('phone').value,
+                '📧 البريد الإلكتروني': document.getElementById('email').value,
+                '🏙️ المدينة': document.getElementById('city').options[document.getElementById('city').selectedIndex].text,
+                '💰 نوع الجمعية': this.selectedPlan ? planNames[this.selectedPlan] : 'لم يتم الاختيار',
+                '🏦 البنك': this.selectedBank ? bankNames[this.selectedBank] : 'لم يتم الاختيار'
+            };
+            
+            const reviewDiv = document.getElementById('reviewData');
+            reviewDiv.innerHTML = Object.entries(data).map(([key, value]) => `
+                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #dee2e6;">
+                    <span style="color: #495057; font-weight: 500;">${key}</span>
+                    <span style="color: var(--primary); font-weight: 600; text-align: left;">${value}</span>
+                </div>
+            `).join('');
+        }
+        
+        selectPlan(planType) {
+            this.selectedPlan = planType;
+            
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            const selectedCard = event.currentTarget;
+            selectedCard.classList.add('selected');
+            
+            const planNames = {
+                '500': '500 ريال',
+                '1000': '1,000 ريال',
+                '5000': '5,000 ريال'
+            };
+            
+            document.getElementById('selectedPlanText').style.display = 'block';
+            document.getElementById('selectedPlanName').textContent = planNames[planType];
+            
+            this.showNotification(`تم اختيار جمعية ${planNames[planType]}`, 'success');
+        }
+        
+        selectBank(bankType) {
+            this.selectedBank = bankType;
+            
+            document.querySelectorAll('.bank-option').forEach(option => {
+                option.style.borderColor = '#dee2e6';
+                option.style.background = 'white';
+            });
+            
+            const selectedOption = document.getElementById(`${bankType}-option`);
+            selectedOption.style.borderColor = bankType === 'rajhi' ? 'var(--rajhi-red)' : 'var(--ahli-blue)';
+            selectedOption.style.background = bankType === 'rajhi' ? 'rgba(206, 17, 38, 0.05)' : 'rgba(0, 86, 163, 0.05)';
+            
+            const bankNames = {
+                'rajhi': 'الراجحي',
+                'ahli': 'الأهلي'
+            };
+            
+            this.showNotification(`تم اختيار بنك ${bankNames[bankType]}`, 'success');
+        }
+        
+        handleReceiptUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                this.receiptFile = file;
+                
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('receiptUpload').style.borderColor = 'var(--success)';
+                document.getElementById('receiptUpload').style.background = 'rgba(46, 139, 87, 0.05)';
+                
+                this.showNotification('تم رفع الإيصال بنجاح', 'success');
+            }
+        }
+        
+        handlePaymentReceipt(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // حفظ الإيصال
+                const receiptData = {
+                    id: 'PAY' + Date.now(),
+                    userId: this.currentUser.id,
+                    fileName: file.name,
+                    fileType: file.type,
+                    uploadDate: new Date().toISOString(),
+                    amount: this.currentUser.plan === '500' ? 500 : 
+                           this.currentUser.plan === '1000' ? 1000 : 5000,
+                    status: 'pending'
+                };
+                
+                this.receipts.push(receiptData);
+                localStorage.setItem('cooperative_receipts', JSON.stringify(this.receipts));
+                
+                // تحديث الدفعات
+                const month = this.currentUser.payments.length + 1;
+                const payment = {
+                    month: month,
+                    amount: receiptData.amount,
+                    date: new Date().toLocaleDateString('ar-SA'),
+                    receiptId: receiptData.id
+                };
+                
+                this.currentUser.payments.push(payment);
+                this.currentUser.totalPaid += payment.amount;
+                
+                localStorage.setItem('cooperative_users', JSON.stringify(this.users));
+                
+                this.showNotification(`تم رفع إيصال الدفع للشهر ${month} بنجاح`, 'success');
+                this.updateDashboard();
+            }
+        }
+        
+        openLogin() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+        
+        closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        
+        modalLogin() {
+            const phone = document.getElementById('modalPhone').value;
+            if (phone) {
+                this.loginUser(phone);
+                this.closeLoginModal();
+            } else {
+                this.showNotification('الرجاء إدخال رقم الجوال', 'error');
+            }
+        }
+    }
+    
+    // ==============================================
+    // تهيئة النظام
+    // ==============================================
+    
+    let cooperativeSystem;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        cooperativeSystem = new CooperativeSystem();
+        
+        // ربط أزرار البنوك بفتح التطبيقات
+        document.querySelectorAll('.bank-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const bank = this.id.replace('-option', '');
+                if (bank === 'rajhi') {
+                    window.open('https://play.google.com/store/apps/details?id=com.alrajhiretailapp', '_blank');
+                } else if (bank === 'ahli') {
+                    window.open('https://play.google.com/store/apps/details?id=com.snb.alahlimobile', '_blank');
+                }
+            });
+        });
+    });
+    
+    // ==============================================
+    // دوال الواجهة العامة
+    // ==============================================
+    
+    function showPage(pageId) {
+        if (cooperativeSystem) cooperativeSystem.showPage(pageId);
+    }
+    
+    function nextStep(step) {
+        if (cooperativeSystem) cooperativeSystem.nextStep(step);
+    }
+    
+    function prevStep() {
+        if (cooperativeSystem) cooperativeSystem.prevStep();
+    }
+    
+    function selectPlan(planType) {
+        if (cooperativeSystem) cooperativeSystem.selectPlan(planType);
+    }
+    
+    function selectBank(bankType) {
+        if (cooperativeSystem) cooperativeSystem.selectBank(bankType);
+    }
+    
+    function handleReceiptUpload(input) {
+        if (cooperativeSystem) cooperativeSystem.handleReceiptUpload(input);
+    }
+    
+    function handlePaymentReceipt(input) {
+        if (cooperativeSystem) cooperativeSystem.handlePaymentReceipt(input);
+    }
+    
+    function openLogin() {
+        if (cooperativeSystem) cooperativeSystem.openLogin();
+    }
+    
+    function closeLoginModal() {
+        if (cooperativeSystem) cooperativeSystem.closeLoginModal();
+    }
+    
+    function modalLogin() {
+        if (cooperativeSystem) cooperativeSystem.modalLogin();
+    }
+    
+    function loginUser() {
+        const phone = document.getElementById('loginPhone').value;
+        if (cooperativeSystem && phone) {
+            cooperativeSystem.loginUser(phone);
+        } else {
+            cooperativeSystem.showNotification('الرجاء إدخال رقم الجوال', 'error');
+        }
+    }
+    
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        if (cooperativeSystem && input.value.trim()) {
+            cooperativeSystem.sendMessage(input.value);
+            input.value = '';
+        }
+    }
+    
+    function closeNotification() {
+        if (cooperativeSystem) cooperativeSystem.closeNotification();
+    }
+    </script>
+</body>
+</html>
